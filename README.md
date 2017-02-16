@@ -42,7 +42,7 @@ arp | grep `virsh -c qemu:///system domiflist $name | tail -n 2 | sed -E 's/.*([
 ssh root@92.168.122.204
 dnf config-manager --set-enabled updates-testing
 dnf install openstack-java-*-3.1.2 java-1.8.0-openjdk-devel maven git
-git clone git@github.com:dominikholler/openstack-java-sdk-verify.git
+git clone https://github.com/dominikholler/openstack-java-sdk-verify.git
 cd openstack-java-sdk-verify/QuantumListNetworksTimeout
 # configure user credentials
 vi src/main/java/com/woorea/openstack/examples/network/QuantumListNetworksTimeout.java  +90
