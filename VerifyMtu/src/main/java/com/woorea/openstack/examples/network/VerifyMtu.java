@@ -1,26 +1,32 @@
 package com.woorea.openstack.examples.network;
 
+import com.woorea.openstack.base.client.OpenStackResponse;
 import com.woorea.openstack.base.client.OpenStackSimpleTokenProvider;
-import com.woorea.openstack.quantum.Quantum;
-import com.woorea.openstack.quantum.model.Network;
-import com.woorea.openstack.quantum.model.Networks;
-
 import com.woorea.openstack.keystone.v3.Keystone;
 import com.woorea.openstack.keystone.v3.model.Authentication;
 import com.woorea.openstack.keystone.v3.model.Authentication.Identity;
 import com.woorea.openstack.keystone.v3.model.Token;
+import com.woorea.openstack.quantum.Quantum;
+import com.woorea.openstack.quantum.model.Network;
+import com.woorea.openstack.quantum.model.Networks;
 
-import com.woorea.openstack.base.client.OpenStackResponse;
+import java.util.List;
+
 
 public class VerifyMtu {
 
-	private static final String KEYSTONE_AUTH_URL = "http://192.168.1.62:35357/v3";
-//	private static final String KEYSTONE_AUTH_URL = "https://fedora-27-gui:35357/v2.0";
-	private static final String KEYSTONE_USERNAME = "demo";
-	private static final String KEYSTONE_DOMAIN = "Default";
-	private static final String KEYSTONE_PASSWORD = "";
-//	private static final String ENDPOINT_URL = "https://fedora-27-gui:9696/v2.0";
-	private static final String ENDPOINT_URL = "http://192.168.1.62:9696/v2.0";
+	private static final String OS_USERNAME = "admin";
+	private static final String OS_PASSWORD = "c314d360aab94a5f";
+	private static final String OS_AUTH_URL = "http://192.168.122.104:5000/v3";
+
+	private static final String OS_PROJECT_NAME = "admin";
+	private static final String OS_USER_DOMAIN_NAME = "Default";
+	private static final String OS_PROJECT_DOMAIN_NAME = "Default";
+
+	private static final String NETWORK_SERVICE_TYPE = "network";
+	private static final String NETWORK_SERVICE_REGION = null;
+	private static final String NETWORK_SERVICE_INTERFACE = "public";
+	private static final String NETWORK_SERVICE_VERSION = "/v2.0";
 
 
 	/**
@@ -28,17 +34,22 @@ public class VerifyMtu {
 	 */
 	public static void main(String[] args) {
 
-		Keystone keystone = new Keystone(KEYSTONE_AUTH_URL);
+		Keystone keystone = new Keystone(OS_AUTH_URL);
 
 		Authentication auth = new Authentication();
-		auth.setIdentity(Identity.password(KEYSTONE_DOMAIN, KEYSTONE_USERNAME, KEYSTONE_PASSWORD));
+		auth.setIdentity(Identity.password(OS_USER_DOMAIN_NAME, OS_USERNAME, OS_PASSWORD));
+		auth.setScope(Authentication.Scope.project(OS_PROJECT_DOMAIN_NAME, OS_PROJECT_NAME));
 
 		OpenStackResponse response = keystone.tokens().authenticate(auth).request();
 
 		String tokenId = response.header("X-Subject-Token");
 		System.out.println("token: " + tokenId);
 
-		Quantum quantum = new Quantum(ENDPOINT_URL);
+
+		Token token = response.getEntity(Token.class);
+		String endpointUrl = findEndpointURL(token.getCatalog(), NETWORK_SERVICE_TYPE, NETWORK_SERVICE_REGION,
+				NETWORK_SERVICE_INTERFACE) +  NETWORK_SERVICE_VERSION;
+		Quantum quantum = new Quantum(endpointUrl);
 		quantum.setTokenProvider(new OpenStackSimpleTokenProvider(tokenId));
 
 
@@ -52,16 +63,37 @@ public class VerifyMtu {
 		createNetwork2(quantum);
 	}
 
+	public static String findEndpointURL(List<Token.Service> serviceCatalog, String type, String region, String facing) {
+		for(Token.Service service : serviceCatalog) {
+			if(type.equals(service.getType())) {
+				for(Token.Service.Endpoint endpoint : service.getEndpoints()) {
+					if(region == null || region.equals(endpoint.getRegion())) {
+						if( facing.equals(endpoint.getInterface())) {
+							return endpoint.getUrl();
+						}
+					}
+				}
+			}
+		}
+		throw new RuntimeException("endpoint url not found");
+	}
+
 	private static void createNetwork(Quantum quantum) {
 		Network network = new Network();
-		network.setName("MtuTestNet1");
-		System.out.println(quantum.networks().create(network).execute());
+		network.setName("MtuTestNet10");
+		createAndDestroy(quantum, network);
 	}
 
 	private static void createNetwork2(Quantum quantum) {
 		Network network = new Network();
-		network.setName("MtuTestNet2");
+		network.setName("MtuTestNet20");
 		network.setMtu(1234);
-		System.out.println(quantum.networks().create(network).execute());
+		createAndDestroy(quantum, network);
+	}
+
+	private static void createAndDestroy(Quantum quantum, Network network) {
+		Network result = quantum.networks().create(network).execute();
+		System.out.println(result);
+		quantum.networks().delete(result.getId()).execute();
 	}
 }

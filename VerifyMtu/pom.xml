@@ -5,77 +5,38 @@
         <artifactId>openstack-java-sdk</artifactId>
         <version>3.2.2-SNAPSHOT</version>
     </parent>
-    <artifactId>openstack-examples</artifactId>
+    <artifactId>verifymtu</artifactId>
     <name>OpenStack Examples</name>
-    <description>OpenStack Examples</description>
+    <description>VerifyMtu</description>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <openstack-sdk.version>3.2.2-SNAPSHOT</openstack-sdk.version>
+      </properties>
     <dependencies>
         <dependency>
             <groupId>com.woorea</groupId>
             <artifactId>keystone-client</artifactId>
-            <version>3.2.2-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.woorea</groupId>
-            <artifactId>nova-client</artifactId>
-            <version>3.2.2-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.woorea</groupId>
-            <artifactId>heat-client</artifactId>
-            <version>3.2.2-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.woorea</groupId>
-            <artifactId>swift-client</artifactId>
-            <version>3.2.2-SNAPSHOT</version>
+            <version>${openstack-sdk.version}</version>
         </dependency>
         <dependency>
             <groupId>com.woorea</groupId>
             <artifactId>quantum-client</artifactId>
-            <version>3.2.2-SNAPSHOT</version>
+            <version>${openstack-sdk.version}</version>
         </dependency>
         <dependency>
             <groupId>com.woorea</groupId>
-            <artifactId>ceilometer-client</artifactId>
-            <version>3.2.2-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.woorea</groupId>
-            <artifactId>glance-client</artifactId>
-            <version>3.2.2-SNAPSHOT</version>
+            <artifactId>resteasy-connector</artifactId>
+            <version>${openstack-sdk.version}</version>
         </dependency>
     </dependencies>
     <profiles>
-        <profile>
-            <id>jersey</id>
-            <dependencies>
-                <dependency>
-                    <groupId>com.woorea</groupId>
-                    <artifactId>jersey-connector</artifactId>
-                    <version>3.0.0-SNAPSHOT</version>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>jersey2</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>com.woorea</groupId>
-                    <artifactId>jersey2-connector</artifactId>
-                    <version>3.1.0-SNAPSHOT</version>
-                </dependency>
-            </dependencies>
-        </profile>
         <profile>
             <id>resteasy</id>
             <dependencies>
                 <dependency>
                     <groupId>com.woorea</groupId>
                     <artifactId>resteasy-connector</artifactId>
-                    <version>3.1.0-SNAPSHOT</version>
+                    <version>${openstack-sdk.version}</version>
                 </dependency>
             </dependencies>
         </profile>
