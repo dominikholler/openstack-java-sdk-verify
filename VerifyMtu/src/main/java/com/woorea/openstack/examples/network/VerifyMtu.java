@@ -68,7 +68,7 @@ public class VerifyMtu {
 			if(type.equals(service.getType())) {
 				for(Token.Service.Endpoint endpoint : service.getEndpoints()) {
 					if(region == null || region.equals(endpoint.getRegion())) {
-						if( facing.equals(endpoint.getInterface())) {
+						if(facing.equals(endpoint.getInterface())) {
 							return endpoint.getUrl();
 						}
 					}
