@@ -16,8 +16,8 @@ import java.util.List;
 public class VerifyMtu {
 
 	private static final String OS_USERNAME = "admin";
-	private static final String OS_PASSWORD = "c314d360aab94a5f";
-	private static final String OS_AUTH_URL = "http://192.168.122.104:5000/v3";
+	private static final String OS_PASSWORD = "183d58715c18445e";
+	private static final String OS_AUTH_URL = "http://192.168.122.78:5000/v3";
 
 	private static final String OS_PROJECT_NAME = "admin";
 	private static final String OS_USER_DOMAIN_NAME = "Default";

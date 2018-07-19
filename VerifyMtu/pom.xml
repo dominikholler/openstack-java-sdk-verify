@@ -28,17 +28,10 @@
             <artifactId>resteasy-connector</artifactId>
             <version>${openstack-sdk.version}</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.woorea</groupId>-->
+            <!--<artifactId>jersey2-connector</artifactId>-->
+            <!--<version>${openstack-sdk.version}</version>-->
+        <!--</dependency>-->
     </dependencies>
-    <profiles>
-        <profile>
-            <id>resteasy</id>
-            <dependencies>
-                <dependency>
-                    <groupId>com.woorea</groupId>
-                    <artifactId>resteasy-connector</artifactId>
-                    <version>${openstack-sdk.version}</version>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
 </project>
