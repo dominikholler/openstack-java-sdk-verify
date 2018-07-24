@@ -3,14 +3,14 @@
     <parent>
         <groupId>com.woorea</groupId>
         <artifactId>openstack-java-sdk</artifactId>
-        <version>3.2.2-SNAPSHOT</version>
+        <version>3.2.3</version>
     </parent>
     <artifactId>verifymtu</artifactId>
     <name>OpenStack Examples</name>
     <description>VerifyMtu</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <openstack-sdk.version>3.2.2-SNAPSHOT</openstack-sdk.version>
+        <openstack-sdk.version>3.2.3</openstack-sdk.version>
       </properties>
     <dependencies>
         <dependency>
