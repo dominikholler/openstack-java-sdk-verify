@@ -10,6 +10,7 @@ dnf install -y openstack-java-*-3.2.3
 git clone https://github.com/dominikholler/openstack-java-sdk-verify.git
 cd openstack-java-sdk-verify/VerifyMtu
 vi src/main/java/com/woorea/openstack/examples/network/VerifyMtu.java +19
+mvn compile && mvn dependency:copy-dependencies
 ./test_on_local.sh # verify that test app and the server is OK
 ./test_on_fedora.sh # verify that the fedora libs are OK
 dnf remove -y openstack-java-*-3.2.3
