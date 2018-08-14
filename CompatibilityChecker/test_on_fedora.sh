@@ -17,4 +17,5 @@ CLASSPATH=$CLASSPATH:/usr/share/java/jboss-jaxrs-2.0-api.jar
 CLASSPATH=$CLASSPATH:/usr/share/java/jboss-logging/jboss-logging.jar
 CLASSPATH=$CLASSPATH:/usr/share/java/resteasy/resteasy-jaxrs.jar
 
+set -xe
 java -classpath $CLASSPATH com.woorea.openstack.examples.network.CompatibilityChecker

@@ -98,9 +98,13 @@ class RawRequestChecker {
 
 public class CompatibilityChecker {
 	public static void main(String args[]) {
+
+		System.out.println("Triggering RawRequestChecker:");
 		RawRequestChecker.check();
-		System.out.println("RawRequestChecker succeeded.");
+		System.out.println("\tRawRequestChecker succeeded.");
+
+		System.out.println("Triggering QuantumChecker:");
 		QuantumChecker.check();
-		System.out.println("QuantumChecker succeeded.");
+		System.out.println("\tQuantumChecker succeeded.");
 	}
 }
