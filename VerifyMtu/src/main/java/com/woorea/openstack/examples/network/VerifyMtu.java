@@ -11,13 +11,14 @@ import com.woorea.openstack.quantum.model.Network;
 import com.woorea.openstack.quantum.model.Networks;
 
 import java.util.List;
+import java.util.Objects;
 
 
 public class VerifyMtu {
 
 	private static final String OS_USERNAME = "admin";
-	private static final String OS_PASSWORD = "183d58715c18445e";
-	private static final String OS_AUTH_URL = "http://207.154.208.67:5000/v3";
+	private static final String OS_PASSWORD = "ZoSie2tI";
+	private static final String OS_AUTH_URL = "http://142.93.103.226:5000/v3";
 
 	private static final String OS_PROJECT_NAME = "admin";
 	private static final String OS_USER_DOMAIN_NAME = "Default";
@@ -88,12 +89,26 @@ public class VerifyMtu {
 		Network network = new Network();
 		network.setName("MtuTestNet20");
 		network.setMtu(1234);
+		network.setPortSecurityEnabled(false);
 		createAndDestroy(quantum, network);
+	}
+
+	private static boolean equals(Object request, Object result) {
+		return request == null || Objects.equals(request, result);
+	}
+
+	private static boolean validate(Network request, Network result) {
+		return equals(request.getName(), result.getName()) &&
+				equals(request.getMtu(), result.getMtu()) &&
+				equals(request.getPortSecurityEnabled(), result.getPortSecurityEnabled());
 	}
 
 	private static void createAndDestroy(Quantum quantum, Network network) {
 		Network result = quantum.networks().create(network).execute();
-		System.out.println(result);
+		System.out.println(String.format("%s: %s",
+				validate(network, result),
+				result));
+		System.out.println();
 		quantum.networks().delete(result.getId()).execute();
 	}
 }
