@@ -87,7 +87,7 @@ public class QuantumListNetworksTimeout {
 
 	private static final String KEYSTONE_AUTH_URL = "https://identity.api.rackspacecloud.com/v2.0";
 	private static final String KEYSTONE_USERNAME = "dominikholler";
-	private static final String KEYSTONE_PASSWORD = "58eecc5790f14c3d87ac302143dbb337";
+	private static final String KEYSTONE_PASSWORD = "";
 	private static final String ENDPOINT_URL = "https://lon.networks.api.rackspacecloud.com/v2.0";
 
 	/**

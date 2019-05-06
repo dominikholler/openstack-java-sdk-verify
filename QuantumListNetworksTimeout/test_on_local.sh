@@ -5,3 +5,4 @@ CLASSPATH=$BASE/target/classes
 CLASSPATH=$CLASSPATH:$BASE/target/dependency/*
 
 java -classpath $CLASSPATH com.woorea.openstack.examples.network.QuantumListNetworksTimeout
+echo SUCCESS
